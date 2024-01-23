@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@reduxjs/toolkit": "^2.0.1",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.3.2",
     "env": "^0.0.2",
@@ -7,6 +8,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.1.0",
     "nodemon": "^3.0.3",
+    "react-redux": "^9.1.0",
     "react-router-dom": "^6.21.3"
   },
   "name": "learn-blog",

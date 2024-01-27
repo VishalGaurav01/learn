@@ -2,7 +2,7 @@ import { Alert, Button, Modal, TextInput } from 'flowbite-react'
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage'
-import {updateStart, updateFailure, updateSuccess, deleteUserStart,deleteUserFailure,deleteUserSuccess} from '../redux/user/userSlice'
+import {updateStart, updateFailure, updateSuccess, deleteUserStart,deleteUserFailure,deleteUserSuccess,signoutSuccess} from '../redux/user/userSlice'
 import { app } from '../firebase'
 // import {HiOutlineExclamationCircle} from 'react-icons/hi';
 // import { CircularProgressbar } from 'react-circular-progressbar';
@@ -20,6 +20,23 @@ export default function DashProfile() {
     const [imageFileUploadingerror, setimageFileUploadingerror] = useState(null);
     console.log(imageFileUploadingProgress,imageFileUploadingerror);
     const fileref =useRef();
+
+    const handleSignout = async () => {
+      try {
+        const res = await fetch('/api/user/signout', {
+          method: 'POST',
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          console.log(data.message);
+        } else {
+          dispatch(signoutSuccess());
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
     const handleImgChange= (e)=>{
         const file= e.target.files[0];
         if(file){
@@ -156,8 +173,8 @@ export default function DashProfile() {
         </Button>
         </form>
         <div className='text-red-500 flex justify-between mt-5'>
-            <span onClick={()=>SetShowModel(true)} className='cursor-pointer'>Delete Account</span>
-            <span className='cursor-pointer'>Sign Out</span>
+            <span onClick={()=>setShowModal(true)} className='cursor-pointer'>Delete Account</span>
+            <span onClick={handleSignout}  className='cursor-pointer'>Sign Out</span>
         </div>
         {updateUserSuccess && (
         <Alert color='success' className='mt-5'>
